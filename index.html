@@ -3,28 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dia dos Namorados</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Nosso Cantinho ❤😉</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #000;
+        }
+        header, footer {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+        nav {
+            text-align: center;
+            margin: 1em 0;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #000;
+        }
+        section {
+            padding: 2em;
+            max-width: 800px;
+            margin: auto;
+            display: none;
+            text-align: center; /* Centralizando o texto */
+        }
+        .active {
+            display: block;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .gallery img {
+            margin: 5px;
+            width: 200px;
+            height: auto;
+        }
+        h1 {
+            display: inline-block;
+            cursor: pointer;
+        }
+        .heart {
+            font-size: 30px;
+            cursor: pointer;
+            color: red;
+            vertical-align: middle; /* Alinha verticalmente com o texto */
+        }
+        .footer-line {
+            background-color: #000;
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Feliz Dia dos Namorados!</h1>
-    <div class="tabs">
-        <button class="tablink" onclick="openTab(event, 'minhasFotos')">Minhas Fotos</button>
-        <button class="tablink" onclick="openTab(event, 'fotosDela')">Fotos dela</button>
-    </div>
+    <header>
+        <h1>Nosso Cantinho<br> <span class="heart" onclick="openPlus18(event)">❤😉</span></h1>
+    </header>
 
-    <div id="minhasFotos" class="tabcontent">
-        <h2>Minhas Fotos</h2>
-        <input type="file" id="uploadMinhasFotos" multiple>
-        <div id="minhasFotosContainer"></div>
-    </div>
+    <nav>
+        <a href="#" onclick="openTab('m')">M🤷‍♀️</a>
+        <a href="#" onclick="openTab('nois')">Nois🤞</a>
+        <a href="#" onclick="openTab('f')">F🤷‍♂️</a>
+    </nav>
 
-    <div id="fotosDela" class="tabcontent">
-        <h2>Fotos dela</h2>
-        <input type="file" id="uploadFotosDela" multiple>
-        <div id="fotosDelaContainer"></div>
-    </div>
+    <section id="introducao" class="tab active">
+        <h2 style="text-align: center;">Introdução</h2>
+        <p style="text-align: center;">Bem-vindo ao Nosso Cantinho! Aqui exploramos diferentes perspectivas e conteúdos para todos os gostos.</p>
+        <p style="text-align: center;">Divirta-se explorando!</p>
+        <p style="text-align: center;">Te amo muito Maria Luysa</p>
+        <p style="text-align: center;">Com amor: Felipe❤</p>
+    </section>
 
-    <script src="script.js"></script>
+    <section id="m" class="tab">
+        <h2>M🤷‍♀️</h2>
+        <p>Como sempre te vejo linda✨</p>
+    </section>
+
+    <section id="nois" class="tab">
+        <h2>Nois🤞</h2>
+        <p>Pretendo atualizar isso um dia ent...</p>
+    </section>
+
+    <section id="f" class="tab">
+        <h2>F🤷‍♂️</h2>
+        <p>"F" de Feito para vc😙🙃</p>
+    </section>
+
+    <section id="plus18" class="tab" style="display: none;">
+        <h2>+18🚫</h2>
+        <p>Hehe, seqsu😈</p>
+    </section>
+
+    <section id="gallery" class="tab">
+        <h2>Galeria</h2>
+        <input type="file" id="fileInput" accept="image/*">
+        <button onclick="uploadImage()">Upload</button>
+        <div class="gallery" id="galleryContainer"></div>
+    </section>
+
+    <footer class="footer-line">
+        TE AMO MY MOON❤🌙
+    </footer>
+
+    <script>
+        function openTab(tabName) {
+            var i, tabContent;
+            tabContent = document.getElementsByClassName("tab");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+            document.getElementById(tabName).style.display = "block";
+        }
+
+        window.onload = function() {
+            openTab('introducao');
+            loadImages();
+        };
+
+        function openPlus18(event) {
+            openTab('plus18');
+        }
+
+        function uploadImage() {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var imgData = e.target.result;
+                    saveImage(imgData);
+                    displayImage(imgData);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveImage(imgData) {
+            var images = JSON.parse(localStorage.getItem('images')) || [];
+            images.push(imgData);
+            localStorage.setItem('images', JSON.stringify(images));
+        }
+
+        function loadImages() {
+            var images = JSON.parse(localStorage.getItem('images')) || [];
+            images.forEach(function(imgData) {
+                displayImage(imgData);
+            });
+        }
+
+        function displayImage(imgData) {
+            var galleryContainer = document.getElementById('galleryContainer');
+            var img = document.createElement('img');
+            img.src = imgData;
+            img.width = 200;
+            img.height = 200;
+            galleryContainer.appendChild(img);
+        }
+    </script>
 </body>
 </html>
