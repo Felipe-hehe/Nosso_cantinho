@@ -1,11 +1,4 @@
-document.getElementById('uploadMinhasFotos').addEventListener('change', function(event) {
-    handleFiles(event.target.files, 'minhasFotosContainer');
-});
-
-document.getElementById('uploadFotosDela').addEventListener('change', function(event) {
-    handleFiles(event.target.files, 'fotosDelaContainer');
-});
-
+// Função para adicionar imagens ao container e armazenar localmente
 function handleFiles(files, containerId) {
     const container = document.getElementById(containerId);
     for (let file of files) {
@@ -13,23 +6,49 @@ function handleFiles(files, containerId) {
             const img = document.createElement('img');
             img.src = URL.createObjectURL(file);
             container.appendChild(img);
+
+            // Armazenar a imagem localmente
+            saveImageLocally(file);
         }
     }
 }
 
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+// Função para salvar a imagem localmente
+function saveImageLocally(imageFile) {
+    // Verificar se o navegador suporta o armazenamento local
+    if (typeof(Storage) !== "undefined") {
+        // Obter a lista de imagens já armazenadas localmente (se houver)
+        let storedImages = localStorage.getItem("savedImages");
+        storedImages = storedImages ? JSON.parse(storedImages) : [];
+
+        // Adicionar a nova imagem à lista
+        storedImages.push(imageFile.name);
+
+        // Salvar a lista de imagens no armazenamento local
+        localStorage.setItem("savedImages", JSON.stringify(storedImages));
+    } else {
+        console.error("Seu navegador não suporta armazenamento local.");
     }
-    tablinks = document.getElementsByClassName("tablink");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
 }
 
-// Abrir a aba padrão
-document.querySelector('.tablink').click();
+// Função para carregar imagens armazenadas localmente ao carregar a página
+window.addEventListener('load', function() {
+    // Verificar se o navegador suporta o armazenamento local
+    if (typeof(Storage) !== "undefined") {
+        // Obter a lista de imagens armazenadas localmente
+        let storedImages = localStorage.getItem("savedImages");
+        storedImages = storedImages ? JSON.parse(storedImages) : [];
+
+        // Carregar as imagens armazenadas no DOM
+        const minhasFotosContainer = document.getElementById('minhasFotosContainer');
+        const fotosDelaContainer = document.getElementById('fotosDelaContainer');
+        for (let imageName of storedImages) {
+            const img = document.createElement('img');
+            img.src = imageName;
+            minhasFotosContainer.appendChild(img);
+            fotosDelaContainer.appendChild(img.cloneNode(true));
+        }
+    } else {
+        console.error("Seu navegador não suporta armazenamento local.");
+    }
+});
