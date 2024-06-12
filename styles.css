@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.tabs {
+    margin-top: 20px;
+}
+
+.tablink {
+    background-color: #f1f1f1;
+    color: black;
+    border: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+}
+
+.tablink:hover {
+    background-color: #ddd;
+}
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+}
+
+.tabcontent img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin: 10px;
+}

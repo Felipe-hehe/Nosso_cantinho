@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dia dos Namorados</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Feliz Dia dos Namorados!</h1>
+    <div class="tabs">
+        <button class="tablink" onclick="openTab(event, 'minhasFotos')">Minhas Fotos</button>
+        <button class="tablink" onclick="openTab(event, 'fotosDela')">Fotos dela</button>
+    </div>
+
+    <div id="minhasFotos" class="tabcontent">
+        <h2>Minhas Fotos</h2>
+        <input type="file" id="uploadMinhasFotos" multiple>
+        <div id="minhasFotosContainer"></div>
+    </div>
+
+    <div id="fotosDela" class="tabcontent">
+        <h2>Fotos dela</h2>
+        <input type="file" id="uploadFotosDela" multiple>
+        <div id="fotosDelaContainer"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
